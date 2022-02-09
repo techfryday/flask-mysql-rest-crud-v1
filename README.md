@@ -14,6 +14,12 @@ Powershell
   > flask run
 ```
 
+# Common Issues
+1. Creating __pycache__ files
+  Windows-powershell-Solution:
+  ```bash
+    $env:PYTHONDONTWRITEBYTECODE=1
+  ```
 
 
 # Common Errors
