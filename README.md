@@ -7,6 +7,15 @@ For video tutorial [SUBSCRIBE](https://www.youtube.com/techfryday) to,
 # Download and setup
 
 Step-1: Creating venv
+  ```bash
+    python -m venv venv
+    ./venv/Scripts/activate
+  ```
+
+Step-2: Installing Dependencies
+  ```bash
+    pip install -r requirements.txt
+  ```
 Step-2: Running application
 Powershell
 ```bash
@@ -14,6 +23,10 @@ Powershell
   > flask run
 ```
 
+# Installing Dependencies
+  ```bash
+    pip install -r requirements.txt
+  ```
 # Common Issues
 1. Creating __pycache__ files
   Windows-powershell-Solution:
