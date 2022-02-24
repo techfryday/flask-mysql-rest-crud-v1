@@ -1,8 +1,17 @@
+import flask
+from flask import request
 from app import app
 from models.user_model import user_model
 obj = user_model()
+
 @app.route("/user/all")
 def all_users():
-    return obj.all_user_model()
+    res = flask.Response(obj.all_user_model())
+    res.headers["Content-type"] = "application/json"
+    return res
+
+@app.route("/user/add", methods=["POST"])
+def add_user():
+    return obj.add_user_model(request.form)
 
 
