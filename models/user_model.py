@@ -12,8 +12,8 @@ class user_model():
         result = self.cur.fetchall()
         if len(result)>0:
             print(type(result))
-            # return json.dumps(result)
-            return make_response({"payload":result},200)
+            return {"payload":result}
+            # return make_response({"payload":result},200)
         else:
             return "No Data Found"
     
