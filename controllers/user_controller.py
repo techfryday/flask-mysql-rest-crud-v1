@@ -22,4 +22,10 @@ def delete_user(id):
 def update_user():
     return obj.update_user_model(request.form)
 
+@app.route("/user/patch", methods=["PATCH"])
+def patch_user():
+    return obj.patch_user_model(request.form)
 
+@app.route("/user/page/<pno>/limit/<limit>", methods=["get"])
+def pagination(pno, limit):
+    return obj.pagination_model(pno, limit)
