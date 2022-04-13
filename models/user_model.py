@@ -1,9 +1,11 @@
+from datetime import datetime, timedelta
 import mysql.connector
 import json
 from flask import make_response, jsonify
+import jwt
 class user_model():
     def __init__(self):
-        self.con = mysql.connector.connect(host="localhost",user="root",password="123123",database="test")
+        self.con = mysql.connector.connect(host="localhost",user="root",password="",database="test")
         self.con.autocommit=True
         self.cur = self.con.cursor(dictionary=True)
         
@@ -75,3 +77,20 @@ class user_model():
             return {"payload":result}
         else:
             return "No Data Found"  
+        
+    def user_login_model(self, username, password):
+        self.cur.execute(f"SELECT id, roleid, avatar, email, name, phone from users WHERE email='{username}' and password='{password}'")
+        result = self.cur.fetchall()
+        if len(result)==1:
+            exptime = datetime.utcnow() + timedelta(minutes=60)
+            exp_epoc_time = exptime.timestamp()
+            data = {
+                "payload":result[0],
+                "exp_time":int(exp_epoc_time)
+            }
+            
+            jwt_token = jwt.encode(data, "Sagar@123", algorithm="HS256")
+            return make_response({"token":jwt_token.decode('UTF-8')}, 200)
+        else:
+            return make_response({"message":"NO SUCH USER"}, 204)
+            

@@ -35,13 +35,12 @@ def pagination(pno, limit):
 @app.route("/user/<uid>/avatar/upload", methods=["PATCH"])
 def upload_avatar(uid):
     file = request.files['avatar']
-    root_dir = os.path.dirname(app.instance_path)
-    new_filename =  str(datetime.now().timestamp()).replace(".", "")
-    split_filename = file.filename.split(".") 
-    ext_pos = len(split_filename)-1
-    ext = split_filename[ext_pos]
-    db_path = f"/uploads/{new_filename}.{ext}"
-    file.save(f"{root_dir}/uploads/{new_filename}.{ext}")
+    new_filename =  str(datetime.now().timestamp()).replace(".", "") # Generating unique name for the file
+    split_filename = file.filename.split(".") # Spliting ORIGINAL filename to seperate extenstion
+    ext_pos = len(split_filename)-1 # Canlculating last index of the list got by splitting the filname
+    ext = split_filename[ext_pos] # Using last index to get the file extension
+    db_path = f"uploads/{new_filename}.{ext}"
+    file.save(f"uploads/{new_filename}.{ext}")
     return obj.upload_avatar_model(uid, db_path)
 
 @app.route("/user/avatar/<uid>", methods=["GET"])
@@ -49,3 +48,8 @@ def get_avatar(uid):
     data = obj.get_avatar_path_model(uid)
     root_dir = os.path.dirname(app.instance_path)
     return send_file(f"{root_dir}{data['payload'][0]['avatar']}")
+
+@app.route("/user/login")
+def user_login():
+    auth_data = request.authorization
+    return obj.user_login_model(auth_data['username'], auth_data['password'])
