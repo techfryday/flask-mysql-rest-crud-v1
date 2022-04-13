@@ -13,7 +13,6 @@ class user_model():
         self.cur.execute("SELECT * FROM users")
         result = self.cur.fetchall()
         if len(result)>0:
-            print(type(result))
             return {"payload":result}
             # return make_response({"payload":result},200)
         else:
@@ -82,13 +81,13 @@ class user_model():
         self.cur.execute(f"SELECT id, roleid, avatar, email, name, phone from users WHERE email='{username}' and password='{password}'")
         result = self.cur.fetchall()
         if len(result)==1:
-            exptime = datetime.utcnow() + timedelta(minutes=60)
+            exptime = datetime.now() + timedelta(minutes=1)
             exp_epoc_time = exptime.timestamp()
             data = {
                 "payload":result[0],
-                "exp_time":int(exp_epoc_time)
+                "exp":int(exp_epoc_time)
             }
-            
+            print(int(exp_epoc_time))
             jwt_token = jwt.encode(data, "Sagar@123", algorithm="HS256")
             return make_response({"token":jwt_token.decode('UTF-8')}, 200)
         else:

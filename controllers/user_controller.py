@@ -2,11 +2,14 @@ import flask
 from flask import request, send_file
 from app import app
 from models.user_model import user_model
+from models.auth_model import auth_model
 import os
 from datetime import datetime
 obj = user_model()
+auth = auth_model()
 
 @app.route("/user/all")
+@auth.token_auth("/user/all")
 def all_users():
     # res = flask.Response(obj.all_user_model())
     # res.headers["Content-type"] = "application/json"
