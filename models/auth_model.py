@@ -4,10 +4,12 @@ import mysql.connector
 import jwt
 from flask import make_response, request, json
 import re
+from configs.config import dbconfig
+
 class auth_model():
     
     def __init__(self):
-        self.con = mysql.connector.connect(host="localhost",user="root",password="",database="test")
+        self.con = mysql.connector.connect(host=dbconfig['host'],user=dbconfig['username'],password=dbconfig['password'],database=dbconfig['database'])
         self.con.autocommit=True
         self.cur = self.con.cursor(dictionary=True)
         
