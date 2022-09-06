@@ -1,5 +1,4 @@
-# REST API CRUD Operations with Python-Flask and MySQL
-The repository will update soon.
+# REST API CRUD Operations with Python-Flask and MySQL (Version-1)
 
 For video tutorial [SUBSCRIBE](https://www.youtube.com/techfryday) to,
 [TechFryDay](https://www.youtube.com/techfryday)

@@ -5,6 +5,7 @@ import jwt
 from flask import make_response, request, json
 import re
 from configs.config import dbconfig
+from functools import wraps
 
 class auth_model():
     
@@ -15,6 +16,7 @@ class auth_model():
         
     def token_auth(self, endpoint=""):
         def inner1(func):
+            @wraps(func)
             def inner2(*args):
                 endpoint = request.url_rule
                 try:
@@ -22,9 +24,9 @@ class auth_model():
                     if re.match("^Bearer *([^ ]+) *$", authorization, flags=0):
                         token = authorization.split(" ")[1]
                         try:
-                            tokendata = jwt.decode(token, "Sagar@123")
-                        except jwt.ExpiredSignatureError:
-                            return make_response({"ERROR":"TOKEN_EXPIRED"}, 401)
+                            tokendata = jwt.decode(token, "Sagar@123", algorithms="HS256")
+                        except Exception as e:
+                            return make_response({"ERROR":str(e)}, 401)
                         print(tokendata)
                         current_role = tokendata['payload']['roleid']
                         self.cur.execute(f"SELECT * FROM accessibility_view WHERE endpoint='{endpoint}'")
@@ -40,6 +42,6 @@ class auth_model():
                     else:
                         return make_response({"ERROR":"INVALID_TOKEN"}, 401)
                 except Exception as e:
-                    return make_response({"ERROR":"NO_TOKEN"}, 401)
+                    return make_response({"ERROR":str(e)}, 401)
             return inner2
         return inner1

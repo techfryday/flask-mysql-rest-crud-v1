@@ -9,6 +9,7 @@ from datetime import datetime
 obj = user_model()
 auth = auth_model()
 
+
 @app.route("/user/all")
 # The endpoint for token_auth() is automatically getting calculated in the auth_model.token_auth() method
 @auth.token_auth()
@@ -19,7 +20,7 @@ def all_users():
 
 @app.route("/user/add", methods=["POST"])
 def add_user():
-    import models.ormmodel
+    # import models.ormmodel
     return "USER CREATING"
 
 @app.route("/user/delete/<id>", methods=["DELETE"])
