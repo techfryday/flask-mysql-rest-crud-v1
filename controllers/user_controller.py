@@ -20,8 +20,7 @@ def all_users():
 
 @app.route("/user/add", methods=["POST"])
 def add_user():
-    # import models.ormmodel
-    return "USER CREATING"
+    return obj.add_user_model(request.form)
 
 @app.route("/user/delete/<id>", methods=["DELETE"])
 def delete_user(id):
