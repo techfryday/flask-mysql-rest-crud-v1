@@ -22,7 +22,16 @@ class user_model():
             return "No Data Found"
     
     def add_user_model(self,data):
-        self.cur.execute(f"INSERT INTO users(name, email, phone, role, password) VALUES('{data['name']}', '{data['email']}', '{data['phone']}', '{data['role']}', '{data['password']}')")
+        self.cur.execute(f"INSERT INTO users(name, email, phone, roleid, password) VALUES('{data['name']}', '{data['email']}', '{data['phone']}', '{data['roleid']}', '{data['password']}')")
+        return make_response({"message":"CREATED_SUCCESSFULLY"},201)
+    
+    def add_multiple_users_model(self, data):
+        # Generating query for multiple inserts
+        qry = "INSERT INTO users(name, email, phone, roleid, password) VALUES "
+        for userdata in data:
+            qry += f" ('{userdata['name']}', '{userdata['email']}', '{userdata['phone']}', {userdata['roleid']},'{userdata['password']}'),"
+        finalqry = qry.rstrip(",")
+        self.cur.execute(finalqry)
         return make_response({"message":"CREATED_SUCCESSFULLY"},201)
 
     def delete_user_model(self,id):

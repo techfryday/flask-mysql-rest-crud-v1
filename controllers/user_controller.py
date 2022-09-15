@@ -22,6 +22,10 @@ def all_users():
 def add_user():
     return obj.add_user_model(request.form)
 
+@app.route("/user/addmultiple", methods=["POST"])
+def add_multiple_users():
+    return obj.add_multiple_users_model(request.json)
+
 @app.route("/user/delete/<id>", methods=["DELETE"])
 def delete_user(id):
     return obj.delete_user_model(id)
